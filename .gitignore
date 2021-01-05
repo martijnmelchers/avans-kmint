@@ -3,3 +3,6 @@
 build/
 .cquery_cached_index/
 \#*
+
+cmake-build-debug
+.idea
