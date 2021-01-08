@@ -24,6 +24,9 @@ private:
 	delta_time t_passed_{};
 	// weet hoe de koe getekend moet worden
 	play::image_drawable drawable_;
+
+	map::map_graph& _g;
+	std::vector<int> _path;
 };
 
 } // namespace pigisland
