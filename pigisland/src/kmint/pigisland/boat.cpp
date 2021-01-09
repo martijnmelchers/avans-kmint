@@ -5,19 +5,21 @@
 #include "kmint/random.hpp"
 
 namespace kmint::pigisland {
-        boat::boat(map::map_graph &g, map::map_node &initial_node)
-                : play::map_bound_actor{initial_node},
-                  drawable_{*this, graphics::image{boat_image()}}, _g(g) {
+    boat::boat(map::map_graph &g, map::map_node &initial_node)
+            : play::map_bound_actor{initial_node},
+              drawable_{*this, graphics::image{boat_image()}}, _g(g) {
+        _state = new WanderState(g);
+    }
 
+
+    void boat::act(delta_time dt) {
+        t_passed_ += dt;
+        if (to_seconds(t_passed_) >= 1) {
+            _state->execute(this, dt);
+            t_passed_ = from_seconds(0);
         }
-
-
-
-        void boat::act(delta_time dt) {
-            auto state = WanderState(_g);
-            state.execute(this, dt);
-            // state->update(...);
-        }
+        // state->update(...);
+    }
 
     boat::~boat() {
     }
