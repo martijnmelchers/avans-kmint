@@ -9,10 +9,13 @@ namespace kmint::pigisland {
     }
 
     void WanderState::execute(boat *actor, kmint::delta_time dt) {
+
         // do shi here
         actor->t_passed_ += dt;
         if (to_seconds(actor->t_passed_) >= 1) {
+
             // pick random edge
+
             int next_index = random_int(0, actor->node().num_edges());
             actor->node(actor->node()[next_index].to());
             actor->t_passed_ = from_seconds(0);

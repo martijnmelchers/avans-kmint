@@ -9,19 +9,14 @@
 namespace kmint {
     namespace pigisland {
         using namespace  kmint::math;
-        class pig : public play::free_roaming_actor, public PhysicsActor {
+        class pig : public PhysicsActor {
         public:
             pig(vector2d location);
-
             const ui::drawable &drawable() const override { return drawable_; }
-
 
         private:
             play::image_drawable drawable_;
-            double mass;
-
-
-
+            void act(delta_time dt) override;
         };
 
     } // namespace pigisland

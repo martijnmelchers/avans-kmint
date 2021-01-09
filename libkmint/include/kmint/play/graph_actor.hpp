@@ -19,7 +19,7 @@ namespace kmint::play {
 template <typename Graph> class graph_actor : public free_roaming_actor {
 public:
   graph_actor(math::vector2d location, Graph const &g)
-      : free_roaming_actor{location}, drawable_{g} {};
+      : free_roaming_actor{location, drawable_}, drawable_{g} {};
   bool perceivable() const override { return false; }
   ui::drawable const &drawable() const override { return drawable_; }
 

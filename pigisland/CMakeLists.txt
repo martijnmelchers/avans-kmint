@@ -19,8 +19,14 @@
                 src/kmint/pigisland/shark.cpp
                 src/kmint/pigisland/boat.cpp
                 src/kmint/pigisland/state/state.hpp
-                src/kmint/pigisland/pig.cpp src/kmint/pigisland/state/porcusvincit/wander_state.cpp src/kmint/pigisland/state/porcusvincit/wander_state.hpp
-         src/kmint/astar/astar.cpp src/kmint/pigisland/force_driven/PhysicsActor.cpp src/kmint/pigisland/force_driven/PhysicsActor.hpp)
+                src/kmint/pigisland/pig.cpp
+         src/kmint/pigisland/state/porcusvincit/wander_state.cpp
+         src/kmint/pigisland/state/porcusvincit/wander_state.hpp
+         src/kmint/astar/astar.cpp
+         src/kmint/pigisland/force_driven/PhysicsActor.cpp
+         src/kmint/pigisland/force_driven/PhysicsActor.hpp
+         src/kmint/pigisland/force_driven/SteeringBehaviors.cpp
+         src/kmint/pigisland/force_driven/SteeringBehaviors.hpp)
 
  target_compile_features(pigisland PUBLIC cxx_std_17)
  target_link_libraries(pigisland PRIVATE kmint)
