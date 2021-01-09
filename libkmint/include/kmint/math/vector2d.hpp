@@ -17,6 +17,7 @@ public:
   constexpr void x(Scalar newX) noexcept { x_ = newX; }
   constexpr Scalar y() const noexcept { return y_; }
   constexpr void y(Scalar newY) noexcept { y_ = newY; }
+  constexpr void truncate(Scalar max) noexcept;
 
   constexpr bool operator==(basic_vector2d other) const noexcept {
     return x_ == other.x_ && y_ == other.y_;
@@ -49,6 +50,9 @@ public:
     y_ /= s;
     return *this;
   }
+
+
+
 
 private:
   Scalar x_{};
@@ -111,6 +115,16 @@ constexpr basic_vector2d<Scalar> operator/(scalar s, basic_vector2d<Scalar> v) {
   return operator/(v, s);
 }
 
+template<typename Scalar>
+constexpr void basic_vector2d<Scalar>::truncate(Scalar max) noexcept {
+  if (distance(vector2d(), *this) > max) {
+    auto norm = normalize(*this);
+    *this = norm * max;
+  }
+}
+
+
+
 template <typename Scalar>
 constexpr scalar dot(basic_vector2d<Scalar> a, basic_vector2d<Scalar> b) {
   return a.x() * b.x() + a.y() * b.y();
@@ -119,6 +133,8 @@ constexpr scalar dot(basic_vector2d<Scalar> a, basic_vector2d<Scalar> b) {
 template <typename Scalar> constexpr auto norm2(basic_vector2d<Scalar> p) {
   return dot(p, p);
 }
+
+
 
 template <typename Scalar> constexpr auto norm(basic_vector2d<Scalar> p) {
   return std::sqrt(dot(p, p));
@@ -148,7 +164,11 @@ basic_vector2d<Scalar> rotate(basic_vector2d<Scalar> v, angle theta) {
   auto c = cos(theta);
   return {c * v.x() - s * v.y(), s * v.x() + c * v.y()};
 }
+
+
 } // namespace math
+
+
 } // namespace kmint
 
 #endif // KMINT_MATH_VECTOR2D_HPP

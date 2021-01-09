@@ -2,34 +2,34 @@
 // Created by sasch on 09/01/2021.
 //
 
+#include <kmint/random.hpp>
+#include <kmint/map/map.hpp>
+
 #include "PhysicsActor.hpp"
 
 
 namespace kmint::pigisland {
     using namespace math;
 
-    void PhysicsActor::pursuit() {
 
+    void PhysicsActor::set_velocity(vector2d velocity) {
+        _velocity = velocity;
     }
 
-    vector2d PhysicsActor::seek(vector2d targetPos) {
-        return vector2d();
+    void PhysicsActor::update_surrounding() {
+        for (auto i = begin_perceived(); i != end_perceived(); ++i) {
+            auto const &a = *i;
+            _surrounding.push_back(&a);
+        }
     }
 
-    void kmint::pigisland::PhysicsActor::wander() {
-
+    std::vector<const kmint::play::actor *> PhysicsActor::getSurrounding() {
+        return _surrounding;
     }
 
-    void PhysicsActor::set_acceleration(double a) {
+    PhysicsActor::PhysicsActor(math::vector2d location, ui::drawable& drawable) : free_roaming_actor(location, drawable), _drawable(drawable) {}
 
-    }
-
-    void PhysicsActor::set_velocity(double v) {
-
-    }
-
-    void PhysicsActor::set_position(double dV) {
-
-
+    const ui::drawable &PhysicsActor::drawable() const {
+        return _drawable;
     }
 }
