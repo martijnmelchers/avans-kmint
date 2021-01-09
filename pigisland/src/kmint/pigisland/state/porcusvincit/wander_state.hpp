@@ -7,13 +7,9 @@ namespace kmint::pigisland {
 
     private:
         std::vector<int> _path;
-        map::map_graph& _g;
     public:
-        explicit WanderState(map::map_graph& g);
-
+        explicit WanderState(map::map_graph &g) : State<kmint::pigisland::boat>(g) {};
         void start(kmint::pigisland::boat *actor) override;
         void execute(kmint::pigisland::boat *actor, kmint::delta_time dt) override;
-
-
     };
 }

@@ -4,6 +4,8 @@
 #include "kmint/map/map.hpp"
 #include "kmint/play.hpp"
 #include "kmint/primitives.hpp"
+#include "kmint/pigisland/state/state.hpp"
+
 
 namespace kmint {
     namespace pigisland {
@@ -29,11 +31,16 @@ namespace kmint {
             delta_time t_passed_{};
 
             ~boat();
+
         private:
-            int damage = 0;
             // weet hoe de koe getekend moet worden
             play::image_drawable drawable_;
-            map::map_graph& _g;
+
+            // De graph
+            map::map_graph &_g;
+
+            // State
+            State<kmint::pigisland::boat> *_state{};
         };
 
     } // namespace pigisland
