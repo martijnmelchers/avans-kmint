@@ -31,7 +31,7 @@ namespace kmint::pigisland {
         virtual void transitionTo(State<T> *state) = 0;
 
     protected:
-        State<T> *_state{};
+        std::unique_ptr<State<T>> _state = nullptr;
     };
 
 

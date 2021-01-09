@@ -11,5 +11,6 @@ namespace kmint::pigisland {
         explicit WanderState(map::map_graph &g) : State<kmint::pigisland::boat>(g) {};
         void start(kmint::pigisland::boat *actor) override;
         void execute(kmint::pigisland::boat *actor, kmint::delta_time dt) override;
+        char calculateBestDock(kmint::pigisland::boat *actor);
     };
 }

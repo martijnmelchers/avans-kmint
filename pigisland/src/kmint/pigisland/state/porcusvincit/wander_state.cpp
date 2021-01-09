@@ -1,9 +1,13 @@
 #include <kmint/pigisland/state/state.hpp>
 #include <kmint/pigisland/boat.hpp>
 #include <kmint/astar/astar.hpp>
+#include <numeric>
 #include "wander_state.hpp"
 #include "kmint/random.hpp"
 #include "grain_dock.hpp"
+#include "grass_dock.hpp"
+#include "tree_dock.hpp"
+#include <bits/stdc++.h>
 
 namespace kmint::pigisland {
     void WanderState::start(kmint::pigisland::boat *actor) {
@@ -31,8 +35,41 @@ namespace kmint::pigisland {
         // Paint fully damaged, repair time!
         if (actor->paintDamage++ == 100) {
             std::cout << "BROKEN NEED REPAIR" << std::endl;
-            actor->transitionTo(new GrainDockState(_g));
+            switch (calculateBestDock(actor)) {
+                case '1':
+                    actor->transitionTo(new GrainDockState(_g));
+                    break;
+                case '2':
+                    actor->transitionTo(new GrassDockState(_g));
+                    break;
+                case '3':
+                    actor->transitionTo(new TreeDockState(_g));
+                    break;
+            };
         }
 
+    }
+
+    char WanderState::calculateBestDock(kmint::pigisland::boat *actor) {
+        // Default best dock is the grain dock
+        char bestDock = '1';
+        float bestDockAverage = 0;
+        std::map<char, std::vector<int>>::iterator it;
+
+        for (auto const &x : actor->repairValues) {
+            if (x.second.empty()) continue;
+
+            float average = std::accumulate(x.second.begin(), x.second.end(), decltype(x.second)::value_type(0)) /
+                            x.second.size();
+
+            if (average > bestDockAverage) {
+                bestDock = x.first;
+                bestDockAverage = average;
+            }
+        }
+
+        std::cout << "BEST DOCK IS: " << bestDock << std::endl;
+
+        return bestDock;
     }
 }

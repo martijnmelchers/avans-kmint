@@ -10,45 +10,44 @@
 
 namespace kmint::pigisland {
 
-        class boat : public play::map_bound_actor, public Context<kmint::pigisland::boat> {
-        public:
-            boat(map::map_graph &g, map::map_node &initial_node);
+    class boat : public play::map_bound_actor, public Context<kmint::pigisland::boat> {
+    public:
+        boat(map::map_graph &g, map::map_node &initial_node);
 
-            // wordt elke game tick aangeroepen
-            void act(delta_time dt) override;
+        // wordt elke game tick aangeroepen
+        void act(delta_time dt) override;
 
-            ui::drawable const &drawable() const override { return drawable_; }
+        [[nodiscard]] ui::drawable const &drawable() const override { return drawable_; }
 
-            // als incorporeal false is, doet de actor mee aan collision detection
-            bool incorporeal() const override { return false; }
+        // als incorporeal false is, doet de actor mee aan collision detection
+        [[nodiscard]] bool incorporeal() const override { return false; }
 
-            // geeft de lengte van een zijde van de collision box van deze actor terug.
-            // Belangrijk voor collision detection
-            scalar collision_range() const override { return 16.0; }
+        // geeft de lengte van een zijde van de collision box van deze actor terug.
+        // Belangrijk voor collision detection
+        [[nodiscard]] scalar collision_range() const override { return 16.0; }
 
-            int paintDamage = 0;
+        int paintDamage = 0;
 
-            ~boat();
+        ~boat();
 
-            void repair(char dock, int repairAmount);
-            void transitionTo(State <boat> *state) override;
-        private:
-            // weet hoe de koe getekend moet worden
-            play::image_drawable drawable_;
+        // Repair
+        std::map<char, std::vector<int>> repairValues;
+        void repair(char dock, int repairAmount);
 
-            // hoeveel tijd is verstreken sinds de laatste beweging
-            delta_time t_passed_{};
+        // Transitions
+        void transitionTo(State<boat> *state) override;
 
-            // De graph
-            map::map_graph &_g;
+    private:
+        // weet hoe de koe getekend moet worden
+        play::image_drawable drawable_;
 
-            std::map<char, std::vector<int>> repairValues;
+        // hoeveel tijd is verstreken sinds de laatste beweging
+        delta_time t_passed_{};
 
+        // De graph
+        map::map_graph &_g;
+    };
 
-            // State
-          //  State<kmint::pigisland::boat> *_state{};
-        };
-
-    } // namespace kmint
+} // namespace kmint
 
 #endif /* KMINT_PIGISLAND_BOAT_HPP */
