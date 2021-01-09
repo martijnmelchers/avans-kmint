@@ -15,8 +15,8 @@ struct comparison {
     }
 };
 
-Astar::Astar(kmint::graph::basic_graph<kmint::map::map_node_info> &graph, const int start, const int end) : _start(
-        start), _end(end), _graph(graph) {}
+Astar::Astar(kmint::graph::basic_graph<kmint::map::map_node_info> &graph, const int start, const int end)
+        : _start(start), _end(end), _graph(graph) {}
 
 
 void Astar::search() {
