@@ -34,8 +34,9 @@ namespace kmint::pigisland {
 
         // Paint fully damaged, repair time!
         if (actor->paintDamage++ == 100) {
-            std::cout << "BROKEN NEED REPAIR" << std::endl;
-            switch (calculateBestDock(actor)) {
+            char sugDock = calculateBestDock(actor);
+            std::cout << "The boat is broken, going to dock: " << sugDock << std::endl;
+            switch (sugDock) {
                 case '1':
                     actor->transitionTo(new GrainDockState(_g));
                     break;
@@ -50,26 +51,43 @@ namespace kmint::pigisland {
 
     }
 
+    bool cmp(std::pair<char, float>& a,
+             std::pair<char, float>& b)
+    {
+        return a.second < b.second;
+    }
+
     char WanderState::calculateBestDock(kmint::pigisland::boat *actor) {
         // Default best dock is the grain dock
-        char bestDock = '1';
-        float bestDockAverage = 0;
-        std::map<char, std::vector<int>>::iterator it;
+        float highest = 0;
+        std::vector<std::pair<char, float>> chances;
 
-        for (auto const &x : actor->repairValues) {
-            if (x.second.empty()) continue;
+        for (auto &x : actor->repairValues) {
+            if(x.second.empty())
+                return x.first;
 
-            float average = std::accumulate(x.second.begin(), x.second.end(), decltype(x.second)::value_type(0)) /
-                            x.second.size();
+            float average = std::accumulate(x.second.begin(), x.second.end(), decltype(x.second)::value_type(0)) / x.second.size();
 
-            if (average > bestDockAverage) {
-                bestDock = x.first;
-                bestDockAverage = average;
-            }
+            if(average > highest)
+                highest = average;
         }
 
-        std::cout << "BEST DOCK IS: " << bestDock << std::endl;
+        for (auto &x : actor->repairValues) {
+            float average = std::accumulate(x.second.begin(), x.second.end(), decltype(x.second)::value_type(0)) / x.second.size();
 
-        return bestDock;
+            chances.emplace_back(x.first, average / highest * 100);
+        }
+
+        std::sort(chances.begin(), chances.end(), cmp);
+
+        for(auto &x : chances) {
+            if(random_int(1, 100) - x.second < 0)
+                return x.first;
+        }
+
+        // Anything goes wrong, default to 1
+        return 1;
     }
+
+
 }
