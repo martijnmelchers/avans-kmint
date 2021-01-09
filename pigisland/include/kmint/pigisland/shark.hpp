@@ -30,6 +30,7 @@ private:
   delta_time t_passed_{};
   // weet hoe de koe getekend moet worden
   play::image_drawable drawable_;
+  int fatigue = 0;
 };
 
 } // namespace pigisland
