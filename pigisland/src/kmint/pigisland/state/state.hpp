@@ -24,4 +24,15 @@ namespace kmint::pigisland {
         map::map_graph &_g;
     };
 
+    template<class T>
+    struct Context {
+
+    public:
+        virtual void transitionTo(State<T> *state) = 0;
+
+    protected:
+        State<T> *_state{};
+    };
+
+
 }

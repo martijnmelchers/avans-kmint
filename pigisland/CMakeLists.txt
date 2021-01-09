@@ -20,7 +20,7 @@
                 src/kmint/pigisland/boat.cpp
                 src/kmint/pigisland/state/state.hpp
                 src/kmint/pigisland/pig.cpp src/kmint/pigisland/state/porcusvincit/wander_state.cpp src/kmint/pigisland/state/porcusvincit/wander_state.hpp
-         src/kmint/astar/astar.cpp src/kmint/pigisland/force_driven/PhysicsActor.cpp src/kmint/pigisland/force_driven/PhysicsActor.hpp)
+                src/kmint/astar/astar.cpp src/kmint/pigisland/force_driven/PhysicsActor.cpp src/kmint/pigisland/force_driven/PhysicsActor.hpp src/kmint/pigisland/state/porcusvincit/grain_dock.cpp src/kmint/pigisland/state/porcusvincit/grain_dock.hpp src/kmint/pigisland/state/porcusvincit/grass_dock.cpp src/kmint/pigisland/state/porcusvincit/grass_dock.hpp src/kmint/pigisland/state/porcusvincit/tree_dock.cpp src/kmint/pigisland/state/porcusvincit/tree_dock.hpp)
 
  target_compile_features(pigisland PUBLIC cxx_std_17)
  target_link_libraries(pigisland PRIVATE kmint)
