@@ -9,7 +9,7 @@
 #include "tree_dock.hpp"
 #include <bits/stdc++.h>
 
-namespace kmint::pigisland {
+namespace kmint::pigisland::pv {
     void WanderState::start(kmint::pigisland::boat *actor) {
 
     }

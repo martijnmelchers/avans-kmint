@@ -75,6 +75,12 @@ void stage::act(delta_time dt) {
     a.act(dt);
   }
 
+  for(const auto& func : after_act) {
+      func();
+  }
+
+  after_act.clear();
+
   auto it = actors_.begin();
   while (it != actors_.end()) {
     if (auto &aptr = *it; aptr->removed()) {

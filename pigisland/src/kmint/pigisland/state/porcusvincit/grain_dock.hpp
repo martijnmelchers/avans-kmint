@@ -2,7 +2,7 @@
 #include "kmint/pigisland/state/state.hpp"
 #include "kmint/pigisland/boat.hpp"
 
-namespace kmint::pigisland {
+namespace kmint::pigisland::pv {
     class GrainDockState : public State<kmint::pigisland::boat> {
 
     private:

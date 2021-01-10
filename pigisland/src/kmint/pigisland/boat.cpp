@@ -1,14 +1,11 @@
 #include <kmint/pigisland/state/porcusvincit/wander_state.hpp>
-#include "kmint/pigisland/boat.hpp"
-#include "kmint/pigisland/node_algorithm.hpp"
 #include "kmint/pigisland/resources.hpp"
-#include "kmint/random.hpp"
 
 namespace kmint::pigisland {
     boat::boat(map::map_graph &g, map::map_node &initial_node)
             : play::map_bound_actor{initial_node},
               drawable_{*this, graphics::image{boat_image()}}, _g(g) {
-        this->transitionTo(new WanderState(_g));
+        this->transitionTo(new pv::WanderState(_g));
 
         repairValues['1'] = std::vector<int>();
         repairValues['2'] = std::vector<int>();

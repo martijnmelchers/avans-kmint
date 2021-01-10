@@ -5,7 +5,7 @@
 #include "grain_dock.hpp"
 #include "wander_state.hpp"
 
-namespace kmint::pigisland {
+namespace kmint::pigisland::pv {
 
     void GrainDockState::start(kmint::pigisland::boat *actor) {
         kmint::graph::basic_node<map::map_node_info> &rNode = find_node_of_kind(_g, '1');
