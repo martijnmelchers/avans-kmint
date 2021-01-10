@@ -29,11 +29,10 @@ namespace kmint::pigisland::knabbel {
         }
 
         for (auto i = actor->begin_perceived(); i != actor->end_perceived(); ++i) {
-            if(actor->smelledPos != vector2d(0,0)) continue;
-
-            std::cout << "smelled pig" << std::endl;
+            std::cout << "smelled pig at " << i->location().x() << " " << i->location().y() << " nodes: " << _g.num_nodes() << std::endl;
             actor->smelledPos = i->location();
             actor->transitionTo(new HuntPigState(_g));
+            return;
         }
     }
 }

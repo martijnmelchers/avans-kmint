@@ -10,9 +10,12 @@
 
 namespace kmint::pigisland::knabbel {
     void HuntPigState::start(kmint::pigisland::shark *actor) {
+        if(_g.num_nodes() != 634)
+            return;
+
         auto &node = find_closest_node_to(_g, actor->smelledPos);
 
-
+        std::cout << node.node_id() << std::endl;
 
         Astar astar(_g, actor->node().node_id(), node.node_id());
         astar.search();
@@ -28,7 +31,7 @@ namespace kmint::pigisland::knabbel {
             _path.pop_back();
         }
 
-        if (actor->fatigue++ == 100) {
+        if (actor->fatigue++ >= 100) {
             actor->transitionTo(new TravelHomeState(_g));
         }
 
