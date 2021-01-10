@@ -19,15 +19,6 @@ namespace kmint::pigisland::knabbel {
         int next_index = random_int(0, actor->node().num_edges());
         actor->node(actor->node()[next_index].to());
 
-        // Tired let's go home
-        if(actor->fatigue++ == 100) {
-            actor->transitionTo(new TravelHomeState(_g));
-        }
-
-        if(kmint::math::distance(actor->location(), actor->boat_->location()) <= 50.0f) {
-            actor->transitionTo(new FleeBoatState(_g));
-        }
-
         for (auto i = actor->begin_perceived(); i != actor->end_perceived(); ++i) {
             std::cout << "smelled pig at " << i->location().x() << " " << i->location().y() << " nodes: " << _g.num_nodes() << std::endl;
             actor->smelledPos = i->location();

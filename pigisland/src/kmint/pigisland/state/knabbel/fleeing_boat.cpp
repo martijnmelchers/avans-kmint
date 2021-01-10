@@ -16,9 +16,5 @@ namespace kmint::pigisland::knabbel {
         } else {
             actor->transitionTo(new WanderState(_g));
         }
-
-
-
-
     }
 }

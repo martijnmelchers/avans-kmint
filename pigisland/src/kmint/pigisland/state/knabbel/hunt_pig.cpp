@@ -31,14 +31,6 @@ namespace kmint::pigisland::knabbel {
             _path.pop_back();
         }
 
-        if (actor->fatigue++ >= 100) {
-            actor->transitionTo(new TravelHomeState(_g));
-        }
-
-        if (kmint::math::distance(actor->location(), actor->boat_->location()) <= 50.0f) {
-            actor->transitionTo(new FleeBoatState(_g));
-        }
-
         if (_path.empty()) {
             std::cout << "reached pig pos" << std::endl;
             actor->transitionTo(new WanderState(_g));

@@ -63,6 +63,7 @@ namespace kmint::pigisland {
 
 
         int eatenPigs = 0;
+        map::map_graph &_g;
     };
 
 } // namespace kmint
