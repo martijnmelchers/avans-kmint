@@ -12,6 +12,12 @@ namespace kmint::pigisland {
         public:
             pig(vector2d location);
             [[nodiscard]] const ui::drawable &drawable() const override { return drawable_; }
+            // geeft aan dat de haai andere actors kan zien
+            [[nodiscard]] bool perceptive() const override { return true; }
+
+            // geeft het bereik aan waarbinnen een haai
+            // andere actors kan waarnemen.
+            [[nodiscard]] scalar perception_range() const override { return 50.f; }
 
         private:
             play::image_drawable drawable_;

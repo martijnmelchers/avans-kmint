@@ -12,10 +12,6 @@ namespace kmint::pigisland {
     using namespace math;
 
 
-    void PhysicsActor::set_velocity(vector2d velocity) {
-        _velocity = velocity;
-    }
-
     void PhysicsActor::update_surrounding() {
         for (auto i = begin_perceived(); i != end_perceived(); ++i) {
             auto const &a = *i;
@@ -31,5 +27,9 @@ namespace kmint::pigisland {
 
     const ui::drawable &PhysicsActor::drawable() const {
         return _drawable;
+    }
+
+    vector2d PhysicsActor::get_velocity() {
+        return _velocity;
     }
 }
