@@ -1,6 +1,4 @@
 #include <kmint/pigisland/state/state.hpp>
-#include <kmint/astar/astar.hpp>
-#include <kmint/pigisland/node_algorithm.hpp>
 #include <kmint/pigisland/main.hpp>
 #include <kmint/random.hpp>
 #include "fleeing_boat.hpp"
