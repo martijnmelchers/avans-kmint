@@ -8,10 +8,11 @@ namespace kmint::pigisland{
     class SteeringBehaviors {
     public:
         SteeringBehaviors(PhysicsActor* actor);
+        ~SteeringBehaviors();
         vector2d calculate();
 
     private:
-        std::unique_ptr<PhysicsActor> _actor{};
+        PhysicsActor* _actor{};
         std::vector<vector2d> _feelers{};
         const int _feeler_length = 30;
         vector2d seek(vector2d targetPos);

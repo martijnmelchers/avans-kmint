@@ -24,7 +24,6 @@ namespace kmint {
         SteeringBehaviors* _steeringBehaviour;
     public:
             explicit PhysicsActor(math::vector2d location, ui::drawable& drawable);
-            ~PhysicsActor() override;
             const double max_speed = 15;
             vector2d get_velocity();
             const ui::drawable &drawable() const override;

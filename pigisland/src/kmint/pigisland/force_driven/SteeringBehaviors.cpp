@@ -132,5 +132,9 @@ namespace kmint::pigisland {
         return perceived;
     }
 
+    SteeringBehaviors::~SteeringBehaviors() {
+        delete _actor;
+    }
+
 
 }

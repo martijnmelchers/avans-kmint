@@ -24,7 +24,7 @@ namespace kmint::pigisland {
 
         // geeft de lengte van een zijde van de collision box van deze actor terug.
         // Belangrijk voor collision detection
-        [[nodiscard]] scalar collision_range() const override { return 16.0; }
+        [[nodiscard]] scalar collision_range() const override { return 100.0; }
 
         int paintDamage = 0;
 

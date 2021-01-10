@@ -11,8 +11,6 @@
 namespace kmint::pigisland {
     using namespace math;
 
-
-
     PhysicsActor::PhysicsActor(math::vector2d location, ui::drawable& drawable) : free_roaming_actor(location, drawable), _drawable(drawable) {
         _steeringBehaviour = new SteeringBehaviors(this);
     }
@@ -24,11 +22,4 @@ namespace kmint::pigisland {
     vector2d PhysicsActor::get_velocity() {
         return _velocity;
     }
-
-    PhysicsActor::~PhysicsActor() {
-        play::free_roaming_actor::~free_roaming_actor();
-
-        delete _steeringBehaviour;
-    }
-
 }
