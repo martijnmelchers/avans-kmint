@@ -12,6 +12,7 @@ namespace kmint::pigisland {
         using namespace  kmint::math;
         class pig : public PhysicsActor  {
         public:
+            ~pig() override;
             pig(vector2d location);
             [[nodiscard]] const ui::drawable &drawable() const override { return drawable_; }
             // geeft aan dat de haai andere actors kan zien
@@ -19,7 +20,7 @@ namespace kmint::pigisland {
 
             // geeft het bereik aan waarbinnen een haai
             // andere actors kan waarnemen.
-            [[nodiscard]] scalar perception_range() const override { return 50.f; }
+            [[nodiscard]] scalar perception_range() const override { return 100.f; }
             [[nodiscard]] bool incorporeal() const override { return false; }
             [[nodiscard]] scalar collision_range() const override { return 16.0; }
 

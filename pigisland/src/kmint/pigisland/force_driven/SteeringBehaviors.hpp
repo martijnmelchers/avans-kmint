@@ -11,7 +11,7 @@ namespace kmint::pigisland{
         vector2d calculate();
 
     private:
-        std::unique_ptr<PhysicsActor> _actor;
+        std::unique_ptr<PhysicsActor> _actor{};
         std::vector<vector2d> _feelers{};
         const int _feeler_length = 30;
         vector2d seek(vector2d targetPos);
@@ -21,6 +21,7 @@ namespace kmint::pigisland{
         vector2d separation();
         vector2d alignment();
         void createFeelers();
+        std::vector<std::reference_wrapper<kmint::play::actor>> getNeighbors();
     };
 
 }

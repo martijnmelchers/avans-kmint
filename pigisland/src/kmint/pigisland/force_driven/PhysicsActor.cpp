@@ -6,24 +6,16 @@
 #include <kmint/map/map.hpp>
 
 #include "PhysicsActor.hpp"
-
+#include "memory"
 
 namespace kmint::pigisland {
     using namespace math;
 
 
-    void PhysicsActor::update_surrounding() {
-        for (auto i = begin_perceived(); i != end_perceived(); ++i) {
-            auto const &a = *i;
-            _surrounding.push_back(&a);
-        }
-    }
 
-    std::vector<const kmint::play::actor *> PhysicsActor::getSurrounding() {
-        return _surrounding;
+    PhysicsActor::PhysicsActor(math::vector2d location, ui::drawable& drawable) : free_roaming_actor(location, drawable), _drawable(drawable) {
+        _steeringBehaviour = new SteeringBehaviors(this);
     }
-
-    PhysicsActor::PhysicsActor(math::vector2d location, ui::drawable& drawable) : free_roaming_actor(location, drawable), _drawable(drawable) {}
 
     const ui::drawable &PhysicsActor::drawable() const {
         return _drawable;
@@ -32,4 +24,11 @@ namespace kmint::pigisland {
     vector2d PhysicsActor::get_velocity() {
         return _velocity;
     }
+
+    PhysicsActor::~PhysicsActor() {
+        play::free_roaming_actor::~free_roaming_actor();
+
+        delete _steeringBehaviour;
+    }
+
 }

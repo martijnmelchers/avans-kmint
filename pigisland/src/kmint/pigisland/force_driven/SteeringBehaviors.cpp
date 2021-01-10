@@ -36,8 +36,8 @@ namespace kmint::pigisland {
 
         int neighborCount = 0;
 
-        for(auto & neighbour : _actor->getSurrounding()) {
-            centerOfMass += neighbour->location();
+        for(auto & neighbour : getNeighbors()) {
+            centerOfMass += neighbour.get().location();
             neighborCount++;
         }
 
@@ -74,9 +74,9 @@ namespace kmint::pigisland {
 
         int neighbourCount = 0;
 
-        auto surrounding = _actor->getSurrounding();
+        auto surrounding = getNeighbors();
         for(auto & neighbour : surrounding) {
-            averageHeading += neighbour->heading();
+            averageHeading += neighbour.get().heading();
             neighbourCount++;
         }
 
@@ -93,9 +93,9 @@ namespace kmint::pigisland {
     vector2d SteeringBehaviors::separation() {
         vector2d steeringForce;
 
-        auto surrounding = _actor->getSurrounding();
+        auto surrounding = getNeighbors();
         for(auto & neighbour : surrounding){
-            auto toActor = _actor->location() - neighbour->location();
+            auto toActor = _actor->location() - neighbour.get().location();
 
             steeringForce += math::normalize(toActor) / distance(_actor->location(), toActor);
         }
@@ -120,5 +120,17 @@ namespace kmint::pigisland {
         temp = math::rotate(temp,angle);
         _feelers[2] = _actor->location() + _feeler_length / 2 * temp;
     }
+
+    std::vector<std::reference_wrapper<kmint::play::actor>> SteeringBehaviors::getNeighbors() {
+        std::vector<std::reference_wrapper<kmint::play::actor>> perceived{};
+        for (auto i = _actor->begin_perceived(); i != _actor->end_perceived(); ++i) {
+            play::actor& actor = *i;
+
+            perceived.emplace_back(actor);
+        }
+
+        return perceived;
+    }
+
 
 }

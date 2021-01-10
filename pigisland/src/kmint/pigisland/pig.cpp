@@ -11,8 +11,6 @@ namespace kmint::pigisland {
 
     void pig::act(delta_time dt) {
 
-        update_surrounding();
-
         vector2d steeringForce  = _steeringBehaviour->calculate();
         vector2d acceleration = steeringForce / mass;
         _velocity += acceleration * dt.count();
@@ -29,7 +27,7 @@ namespace kmint::pigisland {
             heading(math::normalize(_velocity));
         }
 
-        
+
         for (std::size_t i = 0; i < num_colliding_actors(); ++i) {
             auto &a = colliding_actor(i);
 
@@ -46,6 +44,11 @@ namespace kmint::pigisland {
             }
         }
 
+    }
+
+    pig::~pig() {
+        PhysicsActor::~PhysicsActor();
+        
     }
 
 } // namespace kmint
