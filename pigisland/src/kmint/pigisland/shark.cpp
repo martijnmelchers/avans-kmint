@@ -1,10 +1,12 @@
 #include "kmint/pigisland/shark.hpp"
+#include "kmint/pigisland/boat.hpp"
 #include "kmint/pigisland/resources.hpp"
 #include "kmint/random.hpp"
 #include <kmint/pigisland/state/knabbel/wander_state.hpp>
 #include <kmint/pigisland/pig.hpp>
 
 namespace kmint::pigisland {
+
     shark::shark(map::map_graph &g, map::map_node &initial_node, play::stage &stage)
             : play::map_bound_actor{initial_node},
               stage(stage),
@@ -35,7 +37,9 @@ namespace kmint::pigisland {
         stage.after_act.emplace_back([this] {
             auto locs = pigisland::random_pig_locations(100);
             for (auto loc : locs) {
-                stage.build_actor<pigisland::pig>(loc);
+                auto& pig = stage.build_actor<pigisland::pig>(loc);
+                pig.setBoat(*boat_);
+                pig.setShark(*this);
             }
         });
     }

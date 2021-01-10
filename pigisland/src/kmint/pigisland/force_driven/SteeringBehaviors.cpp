@@ -8,10 +8,10 @@ namespace kmint::pigisland {
     vector2d SteeringBehaviors::calculate() {
         vector2d steeringForce;
 
-        steeringForce += cohesion() * 0.001;
+        steeringForce += (cohesion() * _actor->cohesion()) * 0.001;
         steeringForce += wall_avoidance();
-        steeringForce += alignment();
-        steeringForce += separation();
+        steeringForce += (alignment()  *  _actor->alignment()) * 0.001;
+        steeringForce += (separation()  * _actor->separation() * 5);
 
 
 
@@ -21,14 +21,14 @@ namespace kmint::pigisland {
 
     vector2d SteeringBehaviors::seek(vector2d targetPos) {
         vector2d DesiredVelocity = math::normalize(targetPos - _actor->location() )* _actor->max_speed;
-        return (DesiredVelocity - _actor->location());
+        return (DesiredVelocity - _actor->get_velocity());
     }
 
     vector2d SteeringBehaviors::flee(vector2d targetPos) {
         vector2d DesiredVelocity = math::normalize(_actor->location() - targetPos)
                 * _actor->max_speed;
 
-        return (DesiredVelocity - _actor->location());
+        return (DesiredVelocity - _actor->get_velocity());
     }
 
     vector2d SteeringBehaviors::cohesion() {
