@@ -9,19 +9,15 @@ namespace kmint::pigisland {
     }
 
     void pig::act(delta_time dt) {
-        for (std::size_t i = 0; i < num_colliding_actors(); ++i) {
-            auto &a = colliding_actor(i);
-            if (boat_ != nullptr && &a == boat_) {
+        this->handle_collisions([this](actor &a) {
+            if (auto *boat = dynamic_cast<kmint::pigisland::boat *>(&a)) {
                 std::cout << "COLLIDED WITH BOAT!!!" << std::endl;
                 this->remove();
-            }
-
-            if (shark_ != nullptr && &a == shark_) {
+            } else if (auto *shark = dynamic_cast<kmint::pigisland::shark *>(&a)) {
                 std::cout << "COLLIDED WITH SHARK!!!" << std::endl;
                 this->remove();
             }
-        }
-
+        });
     }
 
 } // namespace kmint
