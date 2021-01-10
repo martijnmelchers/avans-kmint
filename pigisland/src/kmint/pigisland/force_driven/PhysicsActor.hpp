@@ -37,7 +37,7 @@ namespace kmint {
         public:
             explicit PhysicsActor(math::vector2d location, ui::drawable &drawable);
 
-            const double max_speed = 15;
+            const double max_speed = 10;
 
             vector2d get_velocity();
 

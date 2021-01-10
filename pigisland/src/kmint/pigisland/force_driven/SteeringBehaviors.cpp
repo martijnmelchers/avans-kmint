@@ -12,11 +12,10 @@ namespace kmint::pigisland {
 
         vector2d steeringForce;
 
-        steeringForce += (cohesion() * _actor->cohesion()) * 0.001;
+        steeringForce += (cohesion() * _actor->cohesion()) * 0.003;
+        steeringForce += (alignment()  *  _actor->alignment()) * 0.0001;
+        steeringForce += (separation()  * _actor->separation()) * 5;
         steeringForce += wall_avoidance(_walls) * 10;
-        steeringForce += (alignment()  *  _actor->alignment()) * 0.001;
-        steeringForce += (separation()  * _actor->separation()) * 10;
-
 
 
         steeringForce.truncate(_actor->max_speed);
@@ -156,13 +155,14 @@ namespace kmint::pigisland {
 
     void SteeringBehaviors::createWalls() {
         _walls.emplace_back(wall{vector2d(0,0), vector2d(0,768), vector2d (1,0)});
-        _walls.emplace_back(wall{vector2d(0,768), vector2d(1024,768), vector2d (0,-1)});
-        _walls.emplace_back(wall{vector2d(0,0), vector2d(1024,0), vector2d (0,1)});
-        _walls.emplace_back(wall{vector2d(1024,0), vector2d(1024,768), vector2d (-1,0)});
+
+        _walls.emplace_back(wall{vector2d(0,768), vector2d(1050,768), vector2d (0,-1)});
+        _walls.emplace_back(wall{vector2d(0,0), vector2d(1024 + 10,0), vector2d (0,1)});
+        _walls.emplace_back(wall{vector2d(1024,0), vector2d(1024 + 10,768), vector2d (-1,0)});
         _walls.emplace_back(wall{vector2d(0,115), vector2d(341,121), vector2d (0,1)});
         _walls.emplace_back(wall{vector2d(341,0), vector2d(341,121), vector2d (1,0)});
         _walls.emplace_back(wall{vector2d(870,0), vector2d(870,148), vector2d (-1,0)});
-        _walls.emplace_back(wall{vector2d(870,148), vector2d(1024,148), vector2d (0,1)});
+        _walls.emplace_back(wall{vector2d(870,148), vector2d(1024 + 10,148), vector2d (0,1)});
 
 
         _walls.emplace_back(wall{vector2d(0,560), vector2d(230,560), vector2d (0,-1)});

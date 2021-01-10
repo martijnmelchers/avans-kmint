@@ -23,10 +23,10 @@ namespace kmint::pigisland {
             vector2d steeringForce = _steeringBehaviour->calculate();
 
 
-            steeringForce += (_steeringBehaviour->seek(boat_->location()) * _w_boat * 0.1) * 0.001;
+            steeringForce += (_steeringBehaviour->seek(boat_->location()) * _w_boat * 0.05) * 0.01;
+            steeringForce += (_steeringBehaviour->seek(shark_->location()) * _w_shark * 0.05) * 0.01;
 
-            steeringForce += (_steeringBehaviour->seek(shark_->location()) * _w_shark * 0.1) * 0.001;
-
+            steeringForce.truncate(max_speed);
             vector2d acceleration = steeringForce / mass;
             _velocity += acceleration * dt.count();
             _velocity.truncate(max_speed);
@@ -38,7 +38,7 @@ namespace kmint::pigisland {
             auto length = (_velocity.x() * _velocity.x() + _velocity.y() * _velocity.y());
 
 
-            if (length > 0.00000001) {
+            if (length > 0.000000001) {
                 heading(math::normalize(_velocity));
             }
         }
