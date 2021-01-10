@@ -38,6 +38,7 @@ namespace kmint::pigisland {
         int fatigue = 0;
         play::stage &stage;
 
+        bool canEat = true;
         void eat(actor *a);
 
     private:

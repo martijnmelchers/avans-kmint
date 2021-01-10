@@ -23,11 +23,7 @@ namespace kmint::pigisland {
         }
 
         // laat ook even zien welke varkentjes hij ruikt
-        for (auto i = begin_perceived(); i != end_perceived(); ++i) {
-//            auto const &a = *i;
-            //std::cout << "Smelled a pig at " << a.location().x() << ", "
-            //           << a.location().y() << "\n";
-        }
+
     }
 
     void shark::transitionTo(State<shark> *state) {
@@ -45,8 +41,10 @@ namespace kmint::pigisland {
     }
 
     void shark::eat(play::actor *a) {
-        eatenPigs++;
-        a->remove();
+        if(canEat) {
+            eatenPigs++;
+            a->remove();
+        }
     }
 
 } // namespace kmint

@@ -9,7 +9,7 @@
 
 namespace kmint::pigisland::knabbel {
     void WanderState::start(kmint::pigisland::shark *actor) {
-
+        actor->canEat = true;
     }
 
     void WanderState::execute(kmint::pigisland::shark *actor, kmint::delta_time dt) {
@@ -34,6 +34,13 @@ namespace kmint::pigisland::knabbel {
         if(actor->fatigue++ == 100) {
             std::cout << "I'm tired, let's go home" << std::endl;
             actor->transitionTo(new TravelHomeState(_g));
+        }
+
+        for (auto i = actor->begin_perceived(); i != actor->end_perceived(); ++i) {
+            std::cout << "piggie detected" << std::endl;
+//            auto const &a = *i;
+            //std::cout << "Smelled a pig at " << a.location().x() << ", "
+            //           << a.location().y() << "\n";
         }
     }
 }
