@@ -5,6 +5,7 @@
 #include "kmint/play.hpp"
 #include "kmint/primitives.hpp"
 #include "kmint/pigisland/state/state.hpp"
+#include "boat.hpp"
 
 
 namespace kmint::pigisland {
@@ -33,6 +34,8 @@ namespace kmint::pigisland {
 
         void queuePigs();
         void transitionTo(State<shark> *state) override;
+        void setBoat(boat const &c) { boat_ = &c; }
+
 
         int fatigue = 0;
         play::stage &stage;
@@ -41,6 +44,8 @@ namespace kmint::pigisland {
         delta_time t_passed_{};
         // weet hoe de koe getekend moet worden
         play::image_drawable drawable_;
+
+        boat const *boat_{};
 
 
     };

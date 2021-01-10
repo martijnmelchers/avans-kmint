@@ -4,7 +4,7 @@
 namespace kmint::pigisland {
     boat::boat(map::map_graph &g, map::map_node &initial_node)
             : play::map_bound_actor{initial_node},
-              drawable_{*this, graphics::image{boat_image()}}, _g(g) {
+              drawable_{*this, graphics::image{boat_image()}}, _g(g){
         this->transitionTo(new pv::WanderState(_g));
 
         repairValues['1'] = std::vector<int>();
@@ -23,6 +23,7 @@ namespace kmint::pigisland {
             _state->execute(this, dt);
             t_passed_ = from_seconds(0);
         }
+
     }
 
     boat::~boat() {

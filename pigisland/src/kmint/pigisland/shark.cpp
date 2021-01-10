@@ -8,7 +8,7 @@ namespace kmint::pigisland {
     shark::shark(map::map_graph &g, map::map_node &initial_node, play::stage &stage)
             : play::map_bound_actor{initial_node},
               stage(stage),
-              drawable_{*this, graphics::image{shark_image()}} {
+              drawable_{*this, graphics::image{shark_image()}}{
         this->transitionTo(new knabbel::WanderState(g));
     }
 
@@ -24,7 +24,7 @@ namespace kmint::pigisland {
 
         // laat ook even zien welke varkentjes hij ruikt
         for (auto i = begin_perceived(); i != end_perceived(); ++i) {
-            auto const &a = *i;
+//            auto const &a = *i;
             //std::cout << "Smelled a pig at " << a.location().x() << ", "
             //           << a.location().y() << "\n";
         }
@@ -39,7 +39,9 @@ namespace kmint::pigisland {
         stage.after_act.emplace_back([this] {
             auto locs = pigisland::random_pig_locations(100);
             for (auto loc : locs) {
-                stage.build_actor<pigisland::pig>(loc);
+                auto &pig = stage.build_actor<pigisland::pig>(loc);
+                pig.setBoat(*boat_);
+                pig.setShark(*this);
             }
         });
     }
