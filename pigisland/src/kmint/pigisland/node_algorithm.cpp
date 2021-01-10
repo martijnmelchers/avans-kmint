@@ -38,7 +38,7 @@ namespace kmint::pigisland {
                                   [location](auto const &l, auto const &r) {
                                       return distance2(l.location(), location) <
                                              distance2(r.location(), location);
-                                  });
+                                   });
         return *i;
     }
 

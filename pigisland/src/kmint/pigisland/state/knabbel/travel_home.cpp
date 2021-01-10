@@ -13,6 +13,7 @@ namespace kmint::pigisland::knabbel {
         astar.search();
 
         _path = astar.construct_path();
+        actor->canEat = false;
     }
 
     void TravelHomeState::execute(kmint::pigisland::shark *actor, kmint::delta_time dt) {
@@ -21,7 +22,6 @@ namespace kmint::pigisland::knabbel {
 
 
         if (actor->node().node_info().kind == 'K') {
-            // TODO: Generate nieuwe varkentjes
             actor->fatigue = 0;
 
             actor->queuePigs();

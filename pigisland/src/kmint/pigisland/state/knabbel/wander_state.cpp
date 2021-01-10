@@ -5,35 +5,24 @@
 #include "wander_state.hpp"
 #include "kmint/random.hpp"
 #include "travel_home.hpp"
+#include "fleeing_boat.hpp"
+#include "hunt_pig.hpp"
 #include <bits/stdc++.h>
+#include <kmint/pigisland/node_algorithm.hpp>
 
 namespace kmint::pigisland::knabbel {
     void WanderState::start(kmint::pigisland::shark *actor) {
-
+        actor->canEat = true;
     }
 
     void WanderState::execute(kmint::pigisland::shark *actor, kmint::delta_time dt) {
-        if (_path.empty()) {
-            int next_index = random_int(0, _g.num_nodes());
+        int next_index = random_int(0, actor->node().num_edges());
+        actor->node(actor->node()[next_index].to());
 
-            while (_g[next_index].node_info().kind != 'W' && _g[next_index].node_info().kind != 'R') {
-                next_index = random_int(0, actor->node().num_edges());
-            }
-
-            kmint::graph::basic_node<map::map_node_info> &rNode = _g[next_index];
-
-            Astar astar(_g, actor->node().node_id(), rNode.node_id());
-            astar.search();
-            _path = astar.construct_path();
-        }
-
-        actor->node(_g[_path.back()]);
-        _path.pop_back();
-
-        // Tired let's go home
-        if(actor->fatigue++ == 100) {
-            std::cout << "I'm tired, let's go home" << std::endl;
-            actor->transitionTo(new TravelHomeState(_g));
+        for (auto i = actor->begin_perceived(); i != actor->end_perceived(); ++i) {
+            actor->smelledPos = i->location();
+            actor->transitionTo(new HuntPigState(_g));
+            return;
         }
     }
 }

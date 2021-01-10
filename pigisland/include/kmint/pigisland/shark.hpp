@@ -10,6 +10,9 @@
 
 namespace kmint::pigisland {
     class boat;
+
+    using namespace math;
+
     class shark : public play::map_bound_actor, public Context<kmint::pigisland::shark> {
     public:
         shark(map::map_graph &g, map::map_node &initial_node, play::stage &stage);
@@ -34,16 +37,25 @@ namespace kmint::pigisland {
         [[nodiscard]] scalar perception_range() const override { return 200.f; }
 
         void queuePigs();
+
         void transitionTo(State<shark> *state) override;
 
         int fatigue = 0;
         play::stage &stage;
 
+        // Eating
+        bool canEat = true;
+
         void eat(actor *a);
+
+        vector2d smelledPos = vector2d(0, 0);
+
+        // Boat
         void setBoat(boat const &c) { boat_ = &c; }
 
-    private:
         boat const *boat_{};
+
+    private:
         // hoeveel tijd is verstreken sinds de laatste beweging
         delta_time t_passed_{};
         // weet hoe de koe getekend moet worden
@@ -51,6 +63,7 @@ namespace kmint::pigisland {
 
 
         int eatenPigs = 0;
+        map::map_graph &_g;
     };
 
 } // namespace kmint

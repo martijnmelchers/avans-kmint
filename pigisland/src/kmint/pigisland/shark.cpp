@@ -1,34 +1,35 @@
 #include "kmint/pigisland/shark.hpp"
-#include "kmint/pigisland/boat.hpp"
 #include "kmint/pigisland/resources.hpp"
-#include "kmint/random.hpp"
 #include <kmint/pigisland/state/knabbel/wander_state.hpp>
-#include <kmint/pigisland/pig.hpp>
+#include <kmint/pigisland/state/knabbel/travel_home.hpp>
+#include <kmint/pigisland/state/knabbel/fleeing_boat.hpp>
 
 namespace kmint::pigisland {
 
     shark::shark(map::map_graph &g, map::map_node &initial_node, play::stage &stage)
             : play::map_bound_actor{initial_node},
               stage(stage),
-              drawable_{*this, graphics::image{shark_image()}}{
+              drawable_{*this, graphics::image{shark_image()}},
+              _g(g) {
         this->transitionTo(new knabbel::WanderState(g));
     }
 
     void shark::act(delta_time dt) {
         t_passed_ += dt;
-        if (to_seconds(t_passed_) >= 1 && node().node_info().kind != 'R') {
-            _state->execute(this, dt);
-            t_passed_ = from_seconds(0);
-        } else if (to_seconds(t_passed_) >= 4 && node().node_info().kind == 'R') {
-            _state->execute(this, dt);
-            t_passed_ = from_seconds(0);
-        }
+        if (to_seconds(t_passed_) >= node()[0].weight()) {
+            if (!dynamic_cast<kmint::pigisland::knabbel::TravelHomeState *>(_state.get()) &&
+                !dynamic_cast<kmint::pigisland::knabbel::FleeBoatState *>(_state.get())) {
+                if (fatigue++ >= 100) {
+                    std::cout << "I'm tired, I'm going home..." << std::endl;
+                    transitionTo(new kmint::pigisland::knabbel::TravelHomeState(_g));
+                } else if (kmint::math::distance(location(), boat_->location()) <= 50.0f) {
+                    std::cout << "Eek! Boat!" << std::endl;
+                    transitionTo(new kmint::pigisland::knabbel::FleeBoatState(_g));
+                }
+            }
 
-        // laat ook even zien welke varkentjes hij ruikt
-        for (auto i = begin_perceived(); i != end_perceived(); ++i) {
-//            auto const &a = *i;
-            //std::cout << "Smelled a pig at " << a.location().x() << ", "
-            //           << a.location().y() << "\n";
+            _state->execute(this, dt);
+            t_passed_ = from_seconds(0);
         }
     }
 
@@ -41,7 +42,7 @@ namespace kmint::pigisland {
         stage.after_act.emplace_back([this] {
             auto locs = pigisland::random_pig_locations(100);
             for (auto loc : locs) {
-                auto& pig = stage.build_actor<pigisland::pig>(loc);
+                auto &pig = stage.build_actor<pigisland::pig>(loc);
                 pig.setBoat(*boat_);
                 pig.setShark(*this);
             }
@@ -49,8 +50,10 @@ namespace kmint::pigisland {
     }
 
     void shark::eat(play::actor *a) {
-        eatenPigs++;
-        a->remove();
+        if (canEat) {
+            eatenPigs++;
+            a->remove();
+        }
     }
 
 } // namespace kmint

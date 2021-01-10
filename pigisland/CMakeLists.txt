@@ -35,7 +35,11 @@
                 src/kmint/pigisland/state/knabbel/wander_state.hpp
                 src/kmint/pigisland/state/knabbel/travel_home.cpp
                 src/kmint/pigisland/state/knabbel/travel_home.hpp
-
+                src/kmint/pigisland/state/knabbel/fleeing_boat.cpp
+                src/kmint/pigisland/state/knabbel/fleeing_boat.hpp
+                src/kmint/pigisland/state/knabbel/hunt_pig.cpp
+                src/kmint/pigisland/state/knabbel/hunt_pig.hpp
+                
                 # A*
                 src/kmint/astar/astar.cpp
                 src/kmint/astar/astar.hpp
