@@ -10,6 +10,8 @@
 
 namespace kmint::pigisland {
         using namespace  kmint::math;
+        class boat;
+        class shark;
         class pig : public PhysicsActor  {
         public:
             ~pig() override;
@@ -23,7 +25,16 @@ namespace kmint::pigisland {
             [[nodiscard]] scalar perception_range() const override { return 100.f; }
             [[nodiscard]] bool incorporeal() const override { return false; }
             [[nodiscard]] scalar collision_range() const override { return 32.0; }
+
+            void setBoat(boat const &c) { boat_ = &c; }
+            void setShark(shark const &s) { shark_ = &s; }
+
+            void set_shark(boat& boat);
         private:
+            boat const *boat_{};
+            shark const *shark_{};
+
+
             play::image_drawable drawable_;
             void act(delta_time dt) override;
         };

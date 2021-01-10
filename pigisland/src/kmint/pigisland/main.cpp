@@ -37,15 +37,20 @@ namespace kmint::pigisland {
                                              graphics::image{map.background_image()});
         s.build_actor<play::map_actor>(math::vector2d{0.f, 0.f}, map.graph());
 
-        s.build_actor<pigisland::boat>(graph,
+        auto& boat = s.build_actor<pigisland::boat>(graph,
                                             pigisland::find_node_of_kind(graph, '1'));
-        s.build_actor<pigisland::shark>(graph,
+        auto& shark = s.build_actor<pigisland::shark>(graph,
                                              pigisland::find_node_of_kind(graph, 'K'), s);
+
+
+        shark.setBoat(boat);
 
 
         auto locs = pigisland::random_pig_locations(100);
         for (auto loc : locs) {
-            s.build_actor<pigisland::pig>(loc);
+            auto& pig = s.build_actor<pigisland::pig>(loc);
+            pig.setBoat(boat);
+            pig.setShark(shark);
         }
 
 

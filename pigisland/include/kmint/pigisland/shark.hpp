@@ -5,10 +5,11 @@
 #include "kmint/play.hpp"
 #include "kmint/primitives.hpp"
 #include "kmint/pigisland/state/state.hpp"
-#include "boat.hpp"
+#include "kmint/pigisland/boat.hpp"
 
 
 namespace kmint::pigisland {
+    class boat;
     class shark : public play::map_bound_actor, public Context<kmint::pigisland::shark> {
     public:
         shark(map::map_graph &g, map::map_node &initial_node, play::stage &stage);
@@ -39,8 +40,10 @@ namespace kmint::pigisland {
         play::stage &stage;
 
         void eat(actor *a);
+        void setBoat(boat const &c) { boat_ = &c; }
 
     private:
+        boat const *boat_{};
         // hoeveel tijd is verstreken sinds de laatste beweging
         delta_time t_passed_{};
         // weet hoe de koe getekend moet worden

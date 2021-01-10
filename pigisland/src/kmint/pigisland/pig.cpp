@@ -21,6 +21,10 @@ namespace kmint::pigisland {
 
         if (!this->removed()) {
             vector2d steeringForce = _steeringBehaviour->calculate();
+
+            steeringForce += (_steeringBehaviour->seek(boat_->location()) * _w_boat);
+            steeringForce += (_steeringBehaviour->seek(shark_->location()) * _w_shark);
+
             vector2d acceleration = steeringForce / mass;
             _velocity += acceleration * dt.count();
             _velocity.truncate(max_speed);
@@ -43,5 +47,6 @@ namespace kmint::pigisland {
     pig::~pig() {
 
     }
+
 
 } // namespace kmint
