@@ -14,6 +14,9 @@ namespace kmint::pigisland::knabbel {
 
         _path = astar.construct_path();
         actor->canEat = false;
+
+        play::image_drawable& image = (kmint::play::image_drawable& ) actor->drawable();
+        image.set_tint(graphics::color(0,100,0));
     }
 
     void TravelHomeState::execute(kmint::pigisland::shark *actor, kmint::delta_time dt) {

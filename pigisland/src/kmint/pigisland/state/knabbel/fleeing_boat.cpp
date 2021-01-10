@@ -7,12 +7,18 @@
 namespace kmint::pigisland::knabbel {
     void FleeBoatState::start(kmint::pigisland::shark *actor) {
         actor->canEat = false;
+
+        play::image_drawable& image = (kmint::play::image_drawable& ) actor->drawable();
+        image.set_tint(graphics::color(100,0,0));
     }
 
     void FleeBoatState::execute(kmint::pigisland::shark *actor, kmint::delta_time dt) {
         if(remainingFlees-- >= 0) {
             int next_index = random_int(0, actor->node().num_edges());
             actor->node(actor->node()[next_index].to());
+
+
+
         } else {
             actor->transitionTo(new WanderState(_g));
         }

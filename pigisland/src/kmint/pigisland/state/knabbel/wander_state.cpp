@@ -13,6 +13,9 @@
 namespace kmint::pigisland::knabbel {
     void WanderState::start(kmint::pigisland::shark *actor) {
         actor->canEat = true;
+
+        play::image_drawable& image = (kmint::play::image_drawable& ) actor->drawable();
+        image.set_tint(graphics::color(100,100,0));
     }
 
     void WanderState::execute(kmint::pigisland::shark *actor, kmint::delta_time dt) {

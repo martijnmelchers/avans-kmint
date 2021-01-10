@@ -17,6 +17,10 @@ namespace kmint::pigisland::knabbel {
         _path = astar.construct_path();
         actor->smelledPos = vector2d(0,0);
         actor->canEat = true;
+
+        play::image_drawable& image = (kmint::play::image_drawable& ) actor->drawable();
+        image.set_tint(graphics::color(0,100,100));
+
     }
 
     void HuntPigState::execute(kmint::pigisland::shark *actor, kmint::delta_time dt) {
