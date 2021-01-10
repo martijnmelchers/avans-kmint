@@ -34,20 +34,20 @@ namespace kmint::pigisland {
 
         void queuePigs();
         void transitionTo(State<shark> *state) override;
-        void setBoat(boat const &c) { boat_ = &c; }
-
 
         int fatigue = 0;
         play::stage &stage;
+
+        void eat(actor *a);
+
     private:
         // hoeveel tijd is verstreken sinds de laatste beweging
         delta_time t_passed_{};
         // weet hoe de koe getekend moet worden
         play::image_drawable drawable_;
 
-        boat const *boat_{};
 
-
+        int eatenPigs = 0;
     };
 
 } // namespace kmint

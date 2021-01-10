@@ -1,4 +1,6 @@
 #include <kmint/pigisland/state/porcusvincit/wander_state.hpp>
+#include <kmint/pigisland/boat.hpp>
+
 #include "kmint/pigisland/resources.hpp"
 
 namespace kmint::pigisland {
@@ -37,6 +39,11 @@ namespace kmint::pigisland {
     void boat::transitionTo(State<boat> *state) {
         _state.reset(state);
         _state->start(this);
+    }
+
+    void boat::board(actor *a) {
+        savedPigs++;
+        a->remove();
     }
 
 } // namespace kmint

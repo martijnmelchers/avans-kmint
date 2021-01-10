@@ -22,19 +22,10 @@ namespace kmint::pigisland {
             // andere actors kan waarnemen.
             [[nodiscard]] scalar perception_range() const override { return 100.f; }
             [[nodiscard]] bool incorporeal() const override { return false; }
-            [[nodiscard]] scalar collision_range() const override { return 16.0; }
-
-            void setBoat(boat const &c) { boat_ = &c; }
-            void setShark(shark const &c) { shark_ = &c; }
-
-
+            [[nodiscard]] scalar collision_range() const override { return 32.0; }
         private:
             play::image_drawable drawable_;
             void act(delta_time dt) override;
-
-            boat const *boat_{};
-            shark const *shark_{};
-
         };
 
     } // namespace kmint

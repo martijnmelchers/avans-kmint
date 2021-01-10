@@ -44,8 +44,6 @@ namespace kmint::pigisland {
         if(neighborCount > 0){
             centerOfMass /= (double)neighborCount;
             steeringForce = seek(centerOfMass);
-
-            std::cout << centerOfMass.x() << " - " << centerOfMass.y() << std::endl;
         }
 
         return steeringForce;
@@ -133,7 +131,7 @@ namespace kmint::pigisland {
     }
 
     SteeringBehaviors::~SteeringBehaviors() {
-        delete _actor;
+        //delete _actor;
     }
 
 

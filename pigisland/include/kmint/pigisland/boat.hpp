@@ -6,6 +6,7 @@
 #include "kmint/play.hpp"
 #include "kmint/primitives.hpp"
 #include "kmint/pigisland/state/state.hpp"
+#include "pig.hpp"
 
 
 namespace kmint::pigisland {
@@ -37,6 +38,8 @@ namespace kmint::pigisland {
         // Transitions
         void transitionTo(State<boat> *state) override;
 
+        void board(actor *a);
+
     private:
         // weet hoe de koe getekend moet worden
         play::image_drawable drawable_;
@@ -46,6 +49,7 @@ namespace kmint::pigisland {
 
         // De graph
         map::map_graph &_g;
+        int savedPigs = 0;
     };
 
 } // namespace kmint

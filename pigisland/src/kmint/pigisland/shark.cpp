@@ -39,11 +39,14 @@ namespace kmint::pigisland {
         stage.after_act.emplace_back([this] {
             auto locs = pigisland::random_pig_locations(100);
             for (auto loc : locs) {
-                auto &pig = stage.build_actor<pigisland::pig>(loc);
-                pig.setBoat(*boat_);
-                pig.setShark(*this);
+                stage.build_actor<pigisland::pig>(loc);
             }
         });
+    }
+
+    void shark::eat(play::actor *a) {
+        eatenPigs++;
+        a->remove();
     }
 
 } // namespace kmint

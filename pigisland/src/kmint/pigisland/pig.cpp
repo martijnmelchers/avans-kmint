@@ -13,11 +13,9 @@ namespace kmint::pigisland {
 
         this->handle_collisions([this](actor &a) {
             if (auto *boat = dynamic_cast<kmint::pigisland::boat *>(&a)) {
-                std::cout << "COLLIDED WITH BOAT!!!" << std::endl;
-                this->remove();
+                boat->board(this);
             } else if (auto *shark = dynamic_cast<kmint::pigisland::shark *>(&a)) {
-                std::cout << "COLLIDED WITH SHARK!!!" << std::endl;
-                this->remove();
+                shark->eat(this);
             }
         });
 
