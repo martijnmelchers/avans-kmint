@@ -11,7 +11,6 @@ namespace kmint::pigisland {
 
     void pig::act(delta_time dt) {
 
-        actor::act(dt);
         update_surrounding();
 
         vector2d steeringForce  = _steeringBehaviour->calculate();
@@ -29,6 +28,24 @@ namespace kmint::pigisland {
         if(length > 0.00000001){
             heading(math::normalize(_velocity));
         }
+
+        
+        for (std::size_t i = 0; i < num_colliding_actors(); ++i) {
+            auto &a = colliding_actor(i);
+
+
+
+            if (boat_ != nullptr && &a == boat_) {
+                std::cout << "COLLIDED WITH BOAT!!!" << std::endl;
+                this->remove();
+            }
+
+            if (shark_ != nullptr && &a == shark_) {
+                std::cout << "COLLIDED WITH SHARK!!!" << std::endl;
+                this->remove();
+            }
+        }
+
     }
 
 } // namespace kmint
