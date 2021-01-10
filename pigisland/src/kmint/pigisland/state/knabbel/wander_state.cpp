@@ -20,7 +20,6 @@ namespace kmint::pigisland::knabbel {
         actor->node(actor->node()[next_index].to());
 
         for (auto i = actor->begin_perceived(); i != actor->end_perceived(); ++i) {
-            std::cout << "smelled pig at " << i->location().x() << " " << i->location().y() << " nodes: " << _g.num_nodes() << std::endl;
             actor->smelledPos = i->location();
             actor->transitionTo(new HuntPigState(_g));
             return;

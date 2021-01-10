@@ -1,9 +1,6 @@
 #include "kmint/pigisland/shark.hpp"
-#include "kmint/pigisland/boat.hpp"
 #include "kmint/pigisland/resources.hpp"
-#include "kmint/random.hpp"
 #include <kmint/pigisland/state/knabbel/wander_state.hpp>
-#include <kmint/pigisland/pig.hpp>
 #include <kmint/pigisland/state/knabbel/travel_home.hpp>
 #include <kmint/pigisland/state/knabbel/fleeing_boat.hpp>
 
@@ -23,8 +20,10 @@ namespace kmint::pigisland {
             if (!dynamic_cast<kmint::pigisland::knabbel::TravelHomeState *>(_state.get()) &&
                 !dynamic_cast<kmint::pigisland::knabbel::FleeBoatState *>(_state.get())) {
                 if (fatigue++ >= 100) {
+                    std::cout << "I'm tired, I'm going home..." << std::endl;
                     transitionTo(new kmint::pigisland::knabbel::TravelHomeState(_g));
                 } else if (kmint::math::distance(location(), boat_->location()) <= 50.0f) {
+                    std::cout << "Eek! Boat!" << std::endl;
                     transitionTo(new kmint::pigisland::knabbel::FleeBoatState(_g));
                 }
             }
@@ -32,9 +31,6 @@ namespace kmint::pigisland {
             _state->execute(this, dt);
             t_passed_ = from_seconds(0);
         }
-
-        // laat ook even zien welke varkentjes hij ruikt
-
     }
 
     void shark::transitionTo(State<shark> *state) {
