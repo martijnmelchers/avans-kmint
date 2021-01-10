@@ -22,7 +22,7 @@ namespace kmint::pigisland {
 
             // geeft het bereik aan waarbinnen een haai
             // andere actors kan waarnemen.
-            [[nodiscard]] scalar perception_range() const override { return 100.f; }
+            [[nodiscard]] scalar perception_range() const override { return 60.f; }
             [[nodiscard]] bool incorporeal() const override { return false; }
             [[nodiscard]] scalar collision_range() const override { return 32.0; }
 

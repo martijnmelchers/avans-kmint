@@ -3,15 +3,19 @@
 #include "math.h"
 
 namespace kmint::pigisland {
-    SteeringBehaviors::SteeringBehaviors(PhysicsActor* actor) : _actor(actor) {}
+    SteeringBehaviors::SteeringBehaviors(PhysicsActor* actor) : _actor(actor) {
+        createWalls();
+    }
 
     vector2d SteeringBehaviors::calculate() {
+
+
         vector2d steeringForce;
 
         steeringForce += (cohesion() * _actor->cohesion()) * 0.001;
-        steeringForce += wall_avoidance();
+        steeringForce += wall_avoidance(_walls);
         steeringForce += (alignment()  *  _actor->alignment()) * 0.001;
-        steeringForce += (separation()  * _actor->separation() * 5);
+        steeringForce += (separation()  * _actor->separation()) * 0.5;
 
 
 
@@ -49,7 +53,7 @@ namespace kmint::pigisland {
         return steeringForce;
     }
 
-    vector2d SteeringBehaviors::wall_avoidance() {
+    vector2d SteeringBehaviors::wall_avoidance(std::vector<wall> walls) {
         createFeelers();
 
 
@@ -59,12 +63,29 @@ namespace kmint::pigisland {
         int closestWall = -1;
 
 
-        vector2d steeringForce,
-                 point, //used for storing temporary info
-                 closestPoint;  //holds the closest intersection point
+        vector2d steeringForce, point, closestPoint;  //holds the closest intersection point
 
+        for(int f = 0; f < _feelers.size(); f++){
+            for(int w = 0; w < walls.size(); w++){
 
-        return vector2d();
+                if(LineIntersection2D(_actor->location(), _feelers[f], walls[w].a, walls[w].b, distToThisIntersection, point)){
+
+                    if(distToThisIntersection < distToClosestIntersection){
+                        distToClosestIntersection = distToThisIntersection;
+                        closestWall = w;
+                        closestPoint = point;
+                    }
+                }
+
+                if(closestWall >= 0){
+                    vector2d overshoot = _feelers[f] - closestPoint;
+
+                    steeringForce = walls[closestWall].normal * math::norm(overshoot);
+                }
+            }
+        }
+
+        return steeringForce;
     }
 
     vector2d SteeringBehaviors::alignment() {
@@ -104,7 +125,6 @@ namespace kmint::pigisland {
 
     void SteeringBehaviors::createFeelers() {
 
-        return;
         _feelers[0] = _actor->location() + _feeler_length * _actor->heading();
 
         vector2d temp = _actor->heading();
@@ -134,5 +154,23 @@ namespace kmint::pigisland {
         //delete _actor;
     }
 
+    void SteeringBehaviors::createWalls() {
+        _walls.emplace_back(wall{vector2d(0,0), vector2d(0,768), vector2d (1,0)});
+        _walls.emplace_back(wall{vector2d(0,768), vector2d(1024,768), vector2d (0,-1)});
+        _walls.emplace_back(wall{vector2d(0,0), vector2d(1024,0), vector2d (0,1)});
+        _walls.emplace_back(wall{vector2d(1024,0), vector2d(1024,768), vector2d (-1,0)});
+        _walls.emplace_back(wall{vector2d(0,115), vector2d(341,121), vector2d (0,1)});
+        _walls.emplace_back(wall{vector2d(341,0), vector2d(341,121), vector2d (1,0)});
+        _walls.emplace_back(wall{vector2d(870,0), vector2d(870,148), vector2d (-1,0)});
+        _walls.emplace_back(wall{vector2d(870,148), vector2d(1024,148), vector2d (0,1)});
 
+
+        _walls.emplace_back(wall{vector2d(0,560), vector2d(230,560), vector2d (0,-1)});
+        _walls.emplace_back(wall{vector2d(230,560), vector2d(230,768), vector2d (1,0)});
+
+
+        _walls.emplace_back(wall{vector2d(780,530), vector2d(1024,530), vector2d (0,-1)});
+        _walls.emplace_back(wall{vector2d(780,530), vector2d(780,768), vector2d (-1,0)});
+
+    }
 }

@@ -166,6 +166,9 @@ basic_vector2d<Scalar> rotate(basic_vector2d<Scalar> v, angle theta) {
 }
 
 
+
+
+
 } // namespace math
 
 
