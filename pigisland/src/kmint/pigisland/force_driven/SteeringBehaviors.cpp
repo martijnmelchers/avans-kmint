@@ -12,10 +12,10 @@ namespace kmint::pigisland {
 
         vector2d steeringForce;
 
-        steeringForce += (cohesion() * _actor->cohesion()) * 0.001;
+        steeringForce += (cohesion() * _actor->cohesion()) * 0.0001;
         steeringForce += wall_avoidance(_walls);
         steeringForce += (alignment()  *  _actor->alignment()) * 0.001;
-        steeringForce += (separation()  * _actor->separation()) * 0.5;
+        steeringForce += (separation()  * _actor->separation());
 
 
 

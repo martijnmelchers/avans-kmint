@@ -42,7 +42,6 @@ void Astar::search() {
             float cost = _weights[current] + edge.weight();
             int next_node_id = edge.to().node_id();
 
-            _graph[next_node_id].tag(kmint::graph::node_tag::visited);
 
             if (_weights.find(next_node_id) == _weights.end() || cost < _weights[next_node_id]) {
                 _weights[next_node_id] = cost;
@@ -74,8 +73,7 @@ std::vector<int> Astar::construct_path() {
     while (current != _start) {
         path.push_back(current);
 
-        // Tag current path as actual path.
-        _graph[current].tag(kmint::graph::node_tag::path);
+
 
         current = _came_from[current];
     }
@@ -84,4 +82,20 @@ std::vector<int> Astar::construct_path() {
 
     return path;
 }
+
+void Astar::draw_path(const std::vector<int>& path) {
+    for(auto& node : _graph){
+        node.tag(kmint::graph::node_tag::normal);
+    }
+
+    for(auto node : _visited){
+        _graph[node].tag(kmint::graph::node_tag::visited);
+    }
+
+    for(auto node : path ){
+        _graph[node].tag(kmint::graph::node_tag::path);
+    }
+}
+
+
 

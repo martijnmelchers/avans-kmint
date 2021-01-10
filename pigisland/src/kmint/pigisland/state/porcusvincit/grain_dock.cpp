@@ -12,8 +12,11 @@ namespace kmint::pigisland::pv {
 
         Astar astar(_g, actor->node().node_id(), rNode.node_id());
         astar.search();
+        play::image_drawable& image = (kmint::play::image_drawable& ) actor->drawable();
+        image.set_tint(graphics::color(100,0,0));
 
         _path = astar.construct_path();
+        astar.draw_path(_path);
     }
 
     void GrainDockState::execute(kmint::pigisland::boat *actor, kmint::delta_time dt) {
